@@ -18,9 +18,8 @@ public class Rental {
         return movie;
     }
 
-    public double calculateAmount() {
+    public double amount() {
         double thisAmount = 0;
-        //determine amounts for each line
         switch (movie.getPriceCode()) {
             case Movie.REGULAR:
                 thisAmount = getAmountForRegularMovies(daysRented);
@@ -33,6 +32,16 @@ public class Rental {
                 break;
         }
         return thisAmount;
+    }
+
+    int frequentRenterPoint() {
+        int renterPoints = 1;
+        if (canAddBonus()) renterPoints++;
+        return renterPoints;
+    }
+
+    private boolean canAddBonus() {
+        return (movie.getPriceCode() == Movie.NEW_RELEASE) && daysRented > 1;
     }
 
     private double getAmountForRegularMovies(int rentedDays) {
@@ -48,4 +57,5 @@ public class Rental {
             amount += (rentedDays - 3) * 1.5;
         return amount;
     }
+
 }

@@ -3,6 +3,8 @@ package com.thoughtworks.movierental;
 import org.junit.Test;
 
 import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertTrue;
+import static org.junit.Assert.assertFalse;
 
 public class RentalTest {
 
@@ -12,11 +14,11 @@ public class RentalTest {
         Movie regularMovie = new Movie("movieTitle", Movie.REGULAR);
         Rental rental = new Rental(regularMovie, 1);
 
-        assertEquals(rental.calculateAmount(), 2.0);
+        assertEquals(rental.amount(), 2.0);
 
         rental = new Rental(regularMovie, 2);
 
-        assertEquals(rental.calculateAmount(), 2.0);
+        assertEquals(rental.amount(), 2.0);
     }
 
     @Test
@@ -24,7 +26,7 @@ public class RentalTest {
         Movie regularMovie = new Movie("movieTitle", Movie.REGULAR);
         Rental rental = new Rental(regularMovie, 3);
 
-        assertEquals(rental.calculateAmount(), 3.5);
+        assertEquals(rental.amount(), 3.5);
     }
 
     // for new release
@@ -34,7 +36,7 @@ public class RentalTest {
         Movie movie = new Movie("movieTitle", Movie.NEW_RELEASE);
         Rental rental = new Rental(movie, 3);
 
-        assertEquals(rental.calculateAmount(), 9.0);
+        assertEquals(rental.amount(), 9.0);
     }
 
     // for children movies
@@ -44,11 +46,11 @@ public class RentalTest {
         Movie childrenMovie = new Movie("movieTitle", Movie.CHILDRENS);
         Rental rental = new Rental(childrenMovie, 1);
 
-        assertEquals(rental.calculateAmount(), 1.5);
+        assertEquals(rental.amount(), 1.5);
 
         rental = new Rental(childrenMovie, 2);
 
-        assertEquals(rental.calculateAmount(), 1.5);
+        assertEquals(rental.amount(), 1.5);
     }
 
     @Test
@@ -56,8 +58,31 @@ public class RentalTest {
         Movie regularMovie = new Movie("movieTitle", Movie.CHILDRENS);
         Rental rental = new Rental(regularMovie, 4);
 
-        assertEquals(rental.calculateAmount(), 3.0);
+        assertEquals(rental.amount(), 3.0);
     }
 
+    @Test
+    public void frequentRenterPoints_should_return_one_if_movie_is_not_new_release() {
+        Movie regularMovie = new Movie("movieTitle", Movie.CHILDRENS);
+        Rental rental = new Rental(regularMovie, 3);
+
+        assertEquals(rental.frequentRenterPoint(), 1);
+    }
+
+    @Test
+    public void frequentRenterPoints_should_return_one_if_movie_is_new_release_but_rented_days_is_one_only() {
+        Movie regularMovie = new Movie("movieTitle", Movie.NEW_RELEASE);
+        Rental rental = new Rental(regularMovie, 1);
+
+        assertEquals(rental.frequentRenterPoint(), 1);
+    }
+
+    @Test
+    public void frequentRenterPoints_should_return_two_if_movie_is_new_release_ane_rented_days_are_more_than_one() {
+        Movie regularMovie = new Movie("movieTitle", Movie.NEW_RELEASE);
+        Rental rental = new Rental(regularMovie, 3);
+
+        assertEquals(rental.frequentRenterPoint(), 2);
+    }
 
 }
