@@ -4,24 +4,20 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertTrue;
 
 
 public class CustomerTest {
 
     private Customer customer;
-    private String customerName;
 
     @Before
-    public void setUp() throws Exception {
-        customerName = "Adarsh";
-        customer = new Customer(customerName);
+    public void setUp() {
+        customer = new Customer("Adarsh");
         customer.addRental(new Rental(new Movie("Avenger", Movie.REGULAR), 2));
     }
 
-    // when there is no rental
     @Test
-    public void statement_should_return_footer_lines_with_0_amount_if_there_is_no_rental() {
+    public void statement_should_return_statement_for_customer() {
         assertEquals("Rental Record for Adarsh\n" +
                 "\tAvenger\t2.0\n" +
                 "Amount owed is 2.0\n" +

@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Customer {
     private String name;
-    private List<Rental> rentals = new ArrayList<>();
+    public List<Rental> rentals = new ArrayList<>();
 
     public Customer(String name) {
         this.name = name;
@@ -15,20 +15,12 @@ public class Customer {
         rentals.add(arg);
     }
 
+    public String getName() { return name;}
+
 
     public String statement() {
-        String result = "Rental Record for " + this.name + "\n";
-
-        for (Rental each : rentals) {
-            result += "\t" + each.getMovie().getTitle() + "\t" +
-                    String.valueOf(each.amount()) + "\n";
-        }
-
-        //add footer lines result
-        result += "Amount owed is " + String.valueOf(totalAmount()) + "\n";
-        result += "You earned " + String.valueOf(totalRenterPoints())
-                + " frequent renter points";
-        return result;
+        TextStatement textStatement = new TextStatement();
+        return textStatement.display(this.getName(), this.rentals, this.totalAmount(), this.totalRenterPoints());
     }
 
     public String htmlStatement(){
@@ -46,11 +38,11 @@ public class Customer {
         return  header + body + footer;
     }
 
-    private int totalRenterPoints() {
+    public int totalRenterPoints() {
         return rentals.stream().mapToInt(Rental::frequentRenterPoint).sum();
     }
 
-    private double totalAmount() {
+    public double totalAmount() {
         return rentals.stream().mapToDouble((Rental::amount)).sum();
     }
 
