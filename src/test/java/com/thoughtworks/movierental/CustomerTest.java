@@ -5,8 +5,6 @@ import org.junit.Test;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
 
 
 public class CustomerTest {
@@ -22,7 +20,7 @@ public class CustomerTest {
 
     // when there is no rental
     @Test
-    public void statement_should_return_footer_lines_with_0_amount_if_there_is_no_rental(){
+    public void statement_should_return_footer_lines_with_0_amount_if_there_is_no_rental() {
 
         double totalAmount = 0;
         int frequentRenterPoints = 0;
@@ -37,7 +35,7 @@ public class CustomerTest {
     // for regular movies
 
     @Test
-    public void statement_should_add_amount_2_for_each_of_the_regular_movies_for_first_two_days(){
+    public void statement_should_add_amount_2_for_each_of_the_regular_movies_for_first_two_days() {
         Movie regularMovie = new Movie("movieTitle", Movie.REGULAR);
         Rental rental = new Rental(regularMovie, 1);
 
@@ -58,7 +56,7 @@ public class CustomerTest {
 
 
     @Test
-    public void statement_should_add_one_and_half_times_per_day_if_rented_for_more_than_2_days_for_regular_movies(){
+    public void statement_should_add_one_and_half_times_per_day_if_rented_for_more_than_2_days_for_regular_movies() {
         Movie regularMovie = new Movie("movieTitle", Movie.REGULAR);
         Rental rental = new Rental(regularMovie, 3);
 
@@ -73,7 +71,7 @@ public class CustomerTest {
     // for new release movies
 
     @Test
-    public void statement_should_add_amount_as_multiplication_of_3_for_each_of_the_new_movies_per_days(){
+    public void statement_should_add_amount_as_multiplication_of_3_for_each_of_the_new_movies_per_days() {
         customer = new Customer(customerName);
         Movie regularMovie = new Movie("movieTitle", Movie.NEW_RELEASE);
         Rental rental = new Rental(regularMovie, 1);
@@ -87,7 +85,7 @@ public class CustomerTest {
     }
 
     @Test
-    public void statement_should_add_one_point_for_new_releases_if_movies_are_rented_for_more_than_a_day(){
+    public void statement_should_add_one_point_for_new_releases_if_movies_are_rented_for_more_than_a_day() {
         customer = new Customer(customerName);
         Movie regularMovie = new Movie("movieTitle", Movie.NEW_RELEASE);
         Rental rental = new Rental(regularMovie, 2);
@@ -103,7 +101,7 @@ public class CustomerTest {
     // for children movies
 
     @Test
-    public void statement_should_add_one_and_half_to_amount_for_first_three_days_for_children_movies(){
+    public void statement_should_add_one_and_half_to_amount_for_first_three_days_for_children_movies() {
         customer = new Customer(customerName);
         Movie regularMovie = new Movie("movieTitle", Movie.CHILDRENS);
         Rental rental = new Rental(regularMovie, 3);
@@ -117,7 +115,7 @@ public class CustomerTest {
     }
 
     @Test
-    public void statement_should_add_one_and_half_to_amount_per_day_after_three_days_for_children_movies(){
+    public void statement_should_add_one_and_half_to_amount_per_day_after_three_days_for_children_movies() {
         customer = new Customer(customerName);
         Movie regularMovie = new Movie("movieTitle", Movie.CHILDRENS);
         Rental rental = new Rental(regularMovie, 5);
