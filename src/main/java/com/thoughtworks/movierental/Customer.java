@@ -15,28 +15,43 @@ public class Customer {
         rentals.add(arg);
     }
 
-    public String getName() {
-        return name;
-    }
 
     public String statement() {
-        double totalAmount = 0;
-        int frequentRenterPoints = 0;
-        String result = "Rental Record for " + getName() + "\n";
-        for (Rental each : rentals) {
-            double thisAmount = each.amount();
-            frequentRenterPoints += each.frequentRenterPoint();
+        String result = "Rental Record for " + this.name + "\n";
 
+        for (Rental each : rentals) {
             result += "\t" + each.getMovie().getTitle() + "\t" +
-                    String.valueOf(thisAmount) + "\n";
-            totalAmount += thisAmount;
+                    String.valueOf(each.amount()) + "\n";
         }
 
         //add footer lines result
-        result += "Amount owed is " + String.valueOf(totalAmount) + "\n";
-        result += "You earned " + String.valueOf(frequentRenterPoints)
+        result += "Amount owed is " + String.valueOf(totalAmount()) + "\n";
+        result += "You earned " + String.valueOf(totalRenterPoints())
                 + " frequent renter points";
         return result;
+    }
+
+    public String htmlStatement(){
+        String header = "<h1>Rental Record for <b>" + this.name +"</b></h1><br/>";
+        String body = "";
+        for (Rental each : rentals) {
+            body += each.getMovie().getTitle() + " " +
+                    String.valueOf(each.amount()) + "<br/>";
+        }
+
+        String footer = "Amount owed is <b>" + String.valueOf(totalAmount()) + "</b><br/>" +
+                "You earned <b>" + String.valueOf(totalRenterPoints())
+                + "</b> frequent renter points";
+
+        return  header + body + footer;
+    }
+
+    private int totalRenterPoints() {
+        return rentals.stream().mapToInt(Rental::frequentRenterPoint).sum();
+    }
+
+    private double totalAmount() {
+        return rentals.stream().mapToDouble((Rental::amount)).sum();
     }
 
 }
