@@ -1,20 +1,20 @@
 package com.thoughtworks.movierental;
 
-public class Rental {
+class Rental {
 
     private int daysRented;
     private Movie movie;
 
-    public Rental(Movie movie, int daysRented) {
+    Rental(Movie movie, int daysRented) {
         this.movie = movie;
         this.daysRented = daysRented;
     }
 
-    public Movie getMovie() {
+    Movie getMovie() {
         return movie;
     }
 
-    public double amount() {
+    double amount() {
         double thisAmount = 0;
         switch (movie.getPriceCode()) {
             case Movie.REGULAR:

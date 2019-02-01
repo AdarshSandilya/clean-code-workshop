@@ -1,50 +1,25 @@
 package com.thoughtworks.movierental;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class Customer {
+class Customer {
     private String name;
-    public List<Rental> rentals = new ArrayList<>();
+    private Rentals rentals;
 
-    public Customer(String name) {
+    Customer(String name, Rentals rentals) {
         this.name = name;
+        this.rentals = rentals;
     }
 
-    public void addRental(Rental arg) {
-        rentals.add(arg);
-    }
-
-    public String getName() { return name;}
+    private String getName() { return name;}
 
 
-    public String statement() {
+    String statement() {
         TextStatement textStatement = new TextStatement();
-        return textStatement.display(this.getName(), this.rentals, this.totalAmount(), this.totalRenterPoints());
+        return textStatement.display(this.getName(), rentals);
     }
 
-    public String htmlStatement(){
-        String header = "<h1>Rental Record for <b>" + this.name +"</b></h1><br/>";
-        String body = "";
-        for (Rental each : rentals) {
-            body += each.getMovie().getTitle() + " " +
-                    String.valueOf(each.amount()) + "<br/>";
-        }
-
-        String footer = "Amount owed is <b>" + String.valueOf(totalAmount()) + "</b><br/>" +
-                "You earned <b>" + String.valueOf(totalRenterPoints())
-                + "</b> frequent renter points";
-
-        return  header + body + footer;
+    String htmlStatement(){
+        HtmlStatement htmlStatement = new HtmlStatement();
+        return htmlStatement.display(this.getName(), rentals);
     }
-
-    public int totalRenterPoints() {
-        return rentals.stream().mapToInt(Rental::frequentRenterPoint).sum();
-    }
-
-    public double totalAmount() {
-        return rentals.stream().mapToDouble((Rental::amount)).sum();
-    }
-
 }
 

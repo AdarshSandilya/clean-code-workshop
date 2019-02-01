@@ -1,9 +1,7 @@
 package com.thoughtworks.movierental;
 
-import java.util.List;
-
-public class TextStatement {
-     public String display(String name, List<Rental> rentals, double totalAmount, int renterPoints) {
+class TextStatement {
+     String display(String name, Rentals rentals) {
          String result = "Rental Record for " + name + "\n";
 
          for (Rental each : rentals) {
@@ -11,9 +9,8 @@ public class TextStatement {
                      String.valueOf(each.amount()) + "\n";
          }
 
-         //add footer lines result
-         result += "Amount owed is " + String.valueOf(totalAmount) + "\n";
-         result += "You earned " + String.valueOf(renterPoints)
+         result += "Amount owed is " + String.valueOf(rentals.totalAmount()) + "\n";
+         result += "You earned " + String.valueOf(rentals.totalRenterPoints())
                  + " frequent renter points";
          return result;
      }

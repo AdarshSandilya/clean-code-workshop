@@ -12,8 +12,9 @@ public class CustomerTest {
 
     @Before
     public void setUp() {
-        customer = new Customer("Adarsh");
-        customer.addRental(new Rental(new Movie("Avenger", Movie.REGULAR), 2));
+        Rentals rentals = new Rentals();
+        rentals.add(new Rental(new Movie("Avenger", Movie.REGULAR), 2));
+        customer = new Customer("Adarsh", rentals);
     }
 
     @Test
